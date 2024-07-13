@@ -13,7 +13,10 @@ if ($_POST) {
     $user->cnpassword = $_POST['confirm_password'];
 
     if ($user->register()) {
-        echo "User registered successfully.";
+        $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? "https://" : "http://";
+        $domainName = $_SERVER['HTTP_HOST'] . '/';
+        $base_url= $protocol . $domainName;
+        header("Location: " . $base_url."sigme-square-module-1/login-form.php");
     } else {
         echo "Failed to register user.";
     }
